@@ -42,6 +42,13 @@
         haskell = import ./linters/haskell.nix { inherit pkgs; };
       });
 
+    internal = forAllSystems (system:
+      let
+        pkgs = nixpkgsFor."${system}";
+      in
+      {
+        mkDoc = import ./internal/mkdoc.nix { inherit pkgs; };
+      });
   };
 
 }
