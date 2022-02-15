@@ -16,4 +16,4 @@ name: src: inFile: outFile:
       installPhase = ''
         echo done
       '';
-    };
+    }
