@@ -1,18 +1,21 @@
 {
   # Nixpkgs / NixOS version to use.
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+    utils.url = "github:numtide/flake-utils";
+  };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, utils }:
     let
 
       # Generate a user-friendly version number.
       version = builtins.substring 0 8 self.lastModifiedDate;
 
       # System types to support.
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
+      supportedSystems = utils.lib.defaultSystems;
 
       # Helper function to generate an attrset '{ x86_64-linux = f "x86_64-linux"; ... }'.
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      forAllSystems = utils.lib.eachSystemMap supportedSystems;
 
       # Nixpkgs instantiated for supported system types.
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; overlays = [ self.overlay ]; });
