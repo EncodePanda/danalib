@@ -19,36 +19,36 @@
 
     in
 
-  {
+    {
 
-    overlay = final: prev: {};
+      overlay = final: prev: { };
 
-    apps = forAllSystems (system:
-      let
-        pkgs = nixpkgsFor."${system}";
-      in
-      {
-        lint-haskell = {
-          type = "app";
-          program = "${self.linters.${system}.haskell.lintScript}/bin/lint";
-        };
-      });
+      apps = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor."${system}";
+        in
+        {
+          lint-haskell = {
+            type = "app";
+            program = "${self.linters.${system}.haskell.lintScript}/bin/lint";
+          };
+        });
 
-    linters = forAllSystems (system:
-      let
-        pkgs = nixpkgsFor."${system}";
-      in
-      {
-        haskell = import ./linters/haskell.nix { inherit pkgs; };
-      });
+      linters = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor."${system}";
+        in
+        {
+          haskell = import ./linters/haskell.nix { inherit pkgs; };
+        });
 
-    internal = forAllSystems (system:
-      let
-        pkgs = nixpkgsFor."${system}";
-      in
-      {
-        mkDoc = import ./internal/mkdoc.nix { inherit pkgs; };
-      });
-  };
+      internal = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor."${system}";
+        in
+        {
+          mkDoc = import ./internal/mkdoc.nix { inherit pkgs; };
+        });
+    };
 
 }
