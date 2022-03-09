@@ -18,6 +18,7 @@ name: src: inFile: outFile:
         mkdir -p $out
         HOME=./. pdflatex ${inFile}.tex
         HOME=./. pdflatex ${inFile}.tex
+        HOME=./. pdflatex ${inFile}.tex
         cp ${inFile}.pdf "$out/${outFile}.pdf"
       '';
       installPhase = ''
