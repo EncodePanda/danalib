@@ -8,7 +8,7 @@
 */
 name: src: inFile: outFile:
   with pkgs;
-  let deps = [ (texlive.combine { inherit (texlive) scheme-basic amsmath graphics hyperref; }) ];
+  let deps = [ (texlive.combine { inherit (texlive) scheme-basic amsmath graphics hyperref pgf; }) ];
   in
     stdenv.mkDerivation {
       name = name;
