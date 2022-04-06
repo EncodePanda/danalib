@@ -6,9 +6,12 @@
    mkDoc assumes that the LaTeX source file can be compiled using
    a standardized set of dependencies.
 */
-name: src: inFile: outFile:
+{name, src, inFile, outFile, extraLatexPackages ? {}}:
   with pkgs;
-  let deps = [ (texlive.combine { inherit (texlive) scheme-basic amsmath graphics hyperref pgf; }) ];
+  let
+    defaultLatexPackages = { inherit (texlive) scheme-basic amsmath graphics hyperref pgf; };
+    deps = [ (texlive.combine (lib.trivial.mergeAttrs defaultLatexPackages extraLatexPackages))
+           ];
   in
     stdenv.mkDerivation {
       name = name;
